@@ -7,7 +7,6 @@ import com.xxl.job.core.log.XxlJobLogger;
 import com.xxl.job.core.util.ShardingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -28,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author xuxueli 2019-12-11 21:52:51
  */
-@Component
+// @Component
 public class SampleXxlJob {
     private static Logger logger = LoggerFactory.getLogger(SampleXxlJob.class);
 
@@ -43,6 +42,24 @@ public class SampleXxlJob {
         for (int i = 0; i < 5; i++) {
             XxlJobLogger.log("beat at:" + i);
             TimeUnit.SECONDS.sleep(2);
+        }
+        return ReturnT.SUCCESS;
+    }
+
+    /**
+     *  测试bean模式
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @XxlJob("myJobHandler")
+    public ReturnT<String> myJobHandler(String param) throws Exception {
+        XxlJobLogger.log("XXL-JOB, Hello World.");
+
+        for (int i = 0; i < 5; i++) {
+            XxlJobLogger.log("beat at:" + i);
+            TimeUnit.SECONDS.sleep(2);
+            System.out.println("我开始执行了...");
         }
         return ReturnT.SUCCESS;
     }
